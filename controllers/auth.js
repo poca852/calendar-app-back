@@ -50,7 +50,9 @@ const renew = async (req = request, res = response) => {
 
   res.json({
     ok: true,
-    token,
+    name,
+    uid,
+    token
   });
 };
 
