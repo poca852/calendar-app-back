@@ -4,10 +4,21 @@ const { generarJWT } = require("../helpers");
 const Usuario = require('../models/usuario');
 
 const postUsuario = async (req = request, res = response) => {
+    
+    const { name, password, email } = req.body;
 
     try {
 
-        const { name, password, email } = req.body;
+        // virificamos si el usuario ya existe en la base de datos
+        const existeUsuario = await Usuario.findOne({email});
+        if(existeUsuario){ 
+            return res.status(404).json({
+                ok: false,
+                msg: 'El usuario ya existe'
+            })
+        }
+
+        // si llega a este punto es porque no existe ningun usuario
         const usuario = new Usuario({ name, password, email });
 
         // encriptamos el password

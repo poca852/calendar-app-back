@@ -9,8 +9,7 @@ const { postUsuario,
         getUsuarios } = require('../controllers/usuarios');
 
 // helpers 
-const { registerExisteEmail,
-        idValido } = require('../helpers');
+const { idValido } = require('../helpers');
 
 // middlewares 
 const { validarCampos } = require('../middlewares');
@@ -19,7 +18,7 @@ const router = Router();
 
 router.post('/', [
         check('name', 'El Nombre es obligatorio').not().isEmpty(),
-        check('email', 'El Email es obligatorio').isEmail().custom(registerExisteEmail),
+        check('email', 'El Email es obligatorio').isEmail(),
         check('password', 'El password debe tener minimo 6 caracteres').isLength({ min: 6 }),
         validarCampos
 ], postUsuario);
